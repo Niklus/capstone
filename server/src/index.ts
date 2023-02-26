@@ -15,10 +15,6 @@ const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/api/ping", (req, res) => {
-  res.status(200).json({ message: "Hello From Server" });
-});
-
 app.use("/api/user", userRouter);
 app.use(errorHandler);
 

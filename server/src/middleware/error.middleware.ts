@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 export default (
-  err: Error,
+  error: Error,
   _req: Request,
   res: Response,
   _next: NextFunction
@@ -9,7 +9,7 @@ export default (
   const statusCode = res.statusCode ? res.statusCode : 500;
 
   res.status(statusCode).json({
-    message: err.message,
-    stack: process.env.NODE_ENV === "production" ? null : err.stack,
+    error: error.message,
+    stack: process.env.NODE_ENV === "production" ? null : error.stack,
   });
 };
