@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import userRouter from "./routes/user.router";
 import errorHandler from "./middleware/error.middleware";
 import connectDB from "./config/db";
+import cors from "cors";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ connectDB(MONGO_URI);
 
 const app: Express = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
