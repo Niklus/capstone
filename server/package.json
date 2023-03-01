@@ -4,7 +4,7 @@
   "description": "ts app",
   "main": "build/index.js",
   "scripts": {
-    "build": "rm -rf build && npx tsc",
+    "build": "npm install && rm -rf build && npx tsc",
     "start": "NODE_ENV=production node build/.",
     "dev": "NODE_ENV=development nodemon src/index.ts"
   },
