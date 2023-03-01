@@ -7,7 +7,7 @@ export default async (URI: string) => {
     const conn = await mongoose.connect(URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     process.exit(1);
   }
 };

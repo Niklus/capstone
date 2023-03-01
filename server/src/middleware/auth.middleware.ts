@@ -7,7 +7,7 @@ interface JwtPayload {
   id: string;
 }
 
-export default asyncHandler(
+const requireAuth = asyncHandler(
   async (req: any, res: Response, next: NextFunction) => {
     let token;
 
@@ -24,19 +24,27 @@ export default asyncHandler(
         // Verify token
         const { id } = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
-        // Get User from token
-        req.user = await User.findOne({ id }).select("id");
+        // Get User from token (check if user still exists)
+        const user = await User.findOne({ id }).select("id");
+
+        if (!user) {
+          throw Error("User does not exist");
+        }
+
+        req.user = user;
 
         next();
-      } catch (err) {
+      } catch (error: any) {
         res.status(401);
-        throw new Error("Not Authorized");
+        throw Error(error.message);
       }
     }
 
     if (!token) {
       res.status(401);
-      throw new Error("Not Authorized, No Token");
+      throw Error("Not Authorized, No Token");
     }
   }
 );
+
+export { requireAuth };
